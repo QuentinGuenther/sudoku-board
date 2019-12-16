@@ -4,7 +4,7 @@ before_install:
 install: true
 
 os: linux
-dist: trusty
+dist: xenial
 jdk: openjdk-11
 
 script:
