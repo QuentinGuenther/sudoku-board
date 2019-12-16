@@ -135,3 +135,7 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/java,gradle,intellij
+.idea/misc.xml
+.idea/codeStyles/codeStyleConfig.xml
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
