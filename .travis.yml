@@ -1,5 +1,6 @@
-install: gradle wrapper --gradle-version 6.0.1
 language: java
+before_install:
+  gradle -b wrapper.gradle wrapper
 install: true
 
 os: linux
