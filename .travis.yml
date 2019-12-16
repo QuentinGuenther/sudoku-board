@@ -1,0 +1,11 @@
+language: java
+before_install:
+  gradle wrapper
+install: true
+
+os: linux
+dist: xenial
+jdk: openjdk-11
+
+script:
+  - ./gradlew clean test
