@@ -61,4 +61,17 @@ class BoardTest {
             .contains("Unable to use arguments: x=-1 (0-8) y=0 (0-8) value=0 (1-9)"),
             exception.getMessage());
     }
+
+    @Test
+    void isValidShouldReturnTrueIfNotDuplicateValue() {
+        board.generateMatrix();
+        assertTrue(board.isValid(0,0,2));
+    }
+
+    @Test
+    void isValidShouldReturnFalseIfDuplicateValue() {
+        board.generateMatrix();
+        board.update(1,0, 2);
+        assertFalse(board.isValid(0,0,2));
+    }
 }

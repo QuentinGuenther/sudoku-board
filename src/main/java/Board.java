@@ -18,8 +18,8 @@ public class Board {
         matrix[x][y].setData(value);
     }
 
-    public void isValid(int x, int y, int value) {
-
+    public boolean isValid(int x, int y, int value) {
+        return !matrix[x][y].isConnectedToValue(value);
     }
 
     public boolean isSolved() {
