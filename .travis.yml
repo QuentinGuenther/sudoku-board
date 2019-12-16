@@ -1,6 +1,6 @@
 language: java
 before_install:
-  gradle -b wrapper.gradle wrapper
+  gradle wrapper
 install: true
 
 os: linux
