@@ -1,10 +1,13 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
+
+group = 'com.quentinguenther'
 
 version '0.0.1'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
@@ -19,5 +22,23 @@ test {
     useJUnitPlatform()
     testLogging {
         events 'PASSED', 'FAILED', 'SKIPPED'
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/QuentinGuenther/sudoku-board")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
     }
 }
