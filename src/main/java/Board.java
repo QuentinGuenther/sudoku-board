@@ -1,10 +1,8 @@
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    public final int LENGTH = 9;
+    private final int LENGTH = 9;
     public Node[][] matrix = new Node[LENGTH][LENGTH];
 
     public void update(int x, int y, int value) {
@@ -17,18 +15,6 @@ public class Board {
 
     public boolean isSolved() {
         return false;
-    }
-
-    public Map<Node, Collection<Node>> getState() {
-        Map<Node, Collection<Node>> matrixList = new HashMap<>();
-
-        for (Node[] nodeArr : matrix){
-            for(Node node : nodeArr) {
-                matrixList.put(node, node.getConnections().values());
-            }
-        }
-
-        return Collections.unmodifiableMap(matrixList);
     }
 
     public void generateMatrix() {
@@ -62,11 +48,11 @@ public class Board {
     private void appendSquare(Node node, int row, int col) {
         final double SQUARE_SIZE = Math.sqrt(LENGTH);
 
-        int r = row - row % 3;
-        int c = col - col % 3;
+        int r = (int)(row - row % SQUARE_SIZE);
+        int c = (int)(col - col % SQUARE_SIZE);
 
-        for (int i = r; i < r + 3; i++) {
-            for (int j = c; j < c + 3; j++) {
+        for (int i = r; i < r + SQUARE_SIZE; i++) {
+            for (int j = c; j < c + SQUARE_SIZE; j++) {
                 node.addConnection(matrix[i][j]);
             }
         }
