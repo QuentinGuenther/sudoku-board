@@ -6,6 +6,15 @@ public class Board {
     public Node[][] matrix = new Node[LENGTH][LENGTH];
 
     public void update(int x, int y, int value) {
+        if(x < 0 || x >= LENGTH ||
+                y < 0 || y >= LENGTH ||
+                value < 1 || value > LENGTH) {
+            throw new IllegalArgumentException("Unable to use arguments: " +
+                                                "x=" + x + " (0-" + (LENGTH - 1) + ") " +
+                                                "y=" + y + " (0-" + (LENGTH - 1) + ") " +
+                                                "value=" + value + " (1-" + LENGTH + ")");
+        }
+
         matrix[x][y].setData(value);
     }
 

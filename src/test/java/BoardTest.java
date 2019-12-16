@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -48,5 +49,16 @@ class BoardTest {
         assertEquals(1, board.matrix[0][1].getData());
         assertTrue(board.matrix[0][0].isConnectedToValue(1));
         assertFalse(board.matrix[0][0].isConnectedToValue(2));
+    }
+
+    @Test
+    void updateShouldThrowExceptionForValuesOutsideOfRange() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+            board.update(-1, 0, 0)
+        );
+
+        assertTrue(exception.getMessage()
+            .contains("Unable to use arguments: x=-1 (0-8) y=0 (0-8) value=0 (1-9)"),
+            exception.getMessage());
     }
 }
