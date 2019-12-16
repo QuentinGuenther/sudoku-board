@@ -1,8 +1,9 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    private final int LENGTH = 9;
+    public final int LENGTH = 9;
     public Node[][] matrix = new Node[LENGTH][LENGTH];
 
     public void update(int x, int y, int value) {
@@ -23,7 +24,15 @@ public class Board {
     }
 
     public boolean isSolved() {
-        return false;
+        for(Node[] nodes: matrix) {
+            for(Node node: nodes) {
+                if(node.getData() < 1 || node.getData() > LENGTH || node.isConnectedToValue(node.data)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void generateMatrix() {
@@ -65,6 +74,20 @@ public class Board {
                 node.addConnection(matrix[i][j]);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(int i = 0; i < LENGTH; i ++) {
+            for(int j = 0; j < LENGTH; j++) {
+                stringBuilder.append(matrix[i][j].getData());
+                stringBuilder.append('|');
+            }
+            stringBuilder.append('\n');
+        }
+        return stringBuilder.toString();
     }
 
     public static class Node {

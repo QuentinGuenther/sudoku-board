@@ -74,4 +74,10 @@ class BoardTest {
         board.update(1,0, 2);
         assertFalse(board.isValid(0,0,2));
     }
+
+    @Test
+    void isSolvedShouldReturnFalseWithUnsolvedBoard() {
+        board.generateMatrix();
+        assertFalse(board.isSolved());
+    }
 }
