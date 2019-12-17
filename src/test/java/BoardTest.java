@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
@@ -63,21 +64,76 @@ class BoardTest {
     }
 
     @Test
-    void isValidShouldReturnTrueIfNotDuplicateValue() {
-        board.generateMatrix();
-        assertTrue(board.isValid(0,0,2));
-    }
-
-    @Test
-    void isValidShouldReturnFalseIfDuplicateValue() {
-        board.generateMatrix();
-        board.update(1,0, 2);
-        assertFalse(board.isValid(0,0,2));
-    }
-
-    @Test
     void isSolvedShouldReturnFalseWithUnsolvedBoard() {
         board.generateMatrix();
         assertFalse(board.isSolved());
+    }
+
+    @Nested
+    class IsValidMove {
+
+        @Nested
+        class Valid {
+
+            @Test
+            void shouldReturnValidIfNotDuplicateValueAndInBounds() {
+                board.generateMatrix();
+                assertEquals(MoveType.VALID, board.isValid(0, 0, 2));
+            }
+        }
+
+        @Nested
+        class OutOfBounds {
+
+            @Test
+            void shouldReturnOutOfBoundsIfXIsLessThanZero () {
+                board.generateMatrix();
+                assertEquals(MoveType.INVALID_OUT_OF_BOUNDS, board.isValid(-1, 0, 2));
+            }
+
+            @Test
+            void shouldReturnOutOfBoundsIfXIsGreaterThanLength () {
+                board.generateMatrix();
+                assertEquals(MoveType.INVALID_OUT_OF_BOUNDS, board.isValid(9, 0, 2));
+            }
+
+            @Test
+            void shouldReturnOutOfBoundsIfYIsLessThanZero () {
+                board.generateMatrix();
+                assertEquals(MoveType.INVALID_OUT_OF_BOUNDS, board.isValid(0, 9, 2));
+            }
+
+            @Test
+            void shouldReturnOutOfBoundsIfYIsGreaterThanLength () {
+                board.generateMatrix();
+                assertEquals(MoveType.INVALID_OUT_OF_BOUNDS, board.isValid(0, 9, 2));
+            }
+        }
+
+        @Nested
+        class InvalidValue {
+
+            @Test
+            void shouldReturnInvalidValueIfValueIsLessThanOne() {
+                board.generateMatrix();
+                assertEquals(MoveType.INVALID_VALUE, board.isValid(0, 0, 0));
+            }
+
+            @Test
+            void shouldReturnInvalidValueIfValueIsGreaterThanLength() {
+                board.generateMatrix();
+                assertEquals(MoveType.INVALID_VALUE, board.isValid(0, 0, 10));
+            }
+        }
+
+        @Nested
+        class DuplicateValue {
+            @Test
+            void shouldReturnDuplicateIfDuplicateValue() {
+                board.generateMatrix();
+                board.update(1,0, 2);
+                assertEquals(MoveType.DUPLICATE_VALUE_IN_ADJACENT_NODES, board.isValid(0,0,2));
+            }
+        }
     }
 }
