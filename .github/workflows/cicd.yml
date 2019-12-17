@@ -14,11 +14,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+
       - name: Unit Test
-        run: ./gradlew test
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: test
       - name: Build with Gradle
-        run: ./gradlew build
+        uses: eskatos/gradle-command-action@v1
+          with:
+            arguments: build
       - name: Deploy to Github Registry
-        run: ./gradlew publish
+        uses: eskatos/gradle-command-action@v1
+          with:
+            arguments: publish
