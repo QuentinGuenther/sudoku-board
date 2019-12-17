@@ -52,6 +52,23 @@ class BoardTest {
     class MakeMove {
 
         @Test
+        void makingValidMoveReturnsValid() {
+            board.generateMatrix();
+
+            assertEquals(MoveType.VALID,
+                            board.update(1, 1, 1));
+        }
+
+        @Test
+        void makingMoveOfDuplicateValueReturnsDuplicateMoveType() {
+            board.generateMatrix();
+            board.update(0, 1, 1);
+
+            assertEquals(MoveType.DUPLICATE_VALUE_IN_ADJACENT_NODES,
+                            board.update(1, 1, 1));
+        }
+
+        @Test
         void connectedNodesShouldRecogniseStateChange() {
             board.generateMatrix();
             board.update(0, 1, 1);
