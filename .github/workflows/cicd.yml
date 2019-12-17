@@ -21,8 +21,8 @@ jobs:
           arguments: test
       - name: Build with Gradle
         uses: eskatos/gradle-command-action@v1
-          with:
-            arguments: build
+        with:
+          arguments: build
       - name: Deploy to Github Registry
         uses: eskatos/gradle-command-action@v1
           with:
