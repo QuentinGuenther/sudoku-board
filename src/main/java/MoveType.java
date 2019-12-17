@@ -1,0 +1,6 @@
+public enum MoveTypes {
+    INVALID_OUT_OF_BOUNDS,
+    INVALID_VALUE ,
+    DUPLICATE_VALUE_IN_ADJACENT_NODES,
+    VALID,
+}
