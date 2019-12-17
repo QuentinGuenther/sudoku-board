@@ -6,7 +6,7 @@ public class Board {
     public final int LENGTH = 9;
     public Node[][] matrix = new Node[LENGTH][LENGTH];
 
-    public void update(int x, int y, int value) {
+    public MoveType update(int x, int y, int value) {
         if(x < 0 || x >= LENGTH ||
                 y < 0 || y >= LENGTH ||
                 value < 1 || value > LENGTH) {
@@ -17,10 +17,28 @@ public class Board {
         }
 
         matrix[x][y].setData(value);
+
+        if(matrix[x][y].isConnectedToValue(value)) {
+            return MoveType.DUPLICATE_VALUE_IN_ADJACENT_NODES;
+        } else {
+            return MoveType.VALID;
+        }
     }
 
-    public boolean isValid(int x, int y, int value) {
-        return !matrix[x][y].isConnectedToValue(value);
+    public MoveType isValid(int x, int y, int value) {
+        if(x < 0 || x >= LENGTH || y < 0 || y >= LENGTH) {
+            return MoveType.INVALID_OUT_OF_BOUNDS;
+        }
+
+        if(value < 1 || value > LENGTH) {
+            return MoveType.INVALID_VALUE;
+        }
+
+        if(matrix[x][y].isConnectedToValue(value)) {
+            return MoveType.DUPLICATE_VALUE_IN_ADJACENT_NODES;
+        }
+
+        return MoveType.VALID;
     }
 
     public boolean isSolved() {
@@ -53,13 +71,17 @@ public class Board {
 
     private void appendHorizontal(Node node, int index) {
         for(int i = 0; i < matrix[index].length; i++) {
-            node.addConnection(matrix[index][i]);
+            if(!node.equals(matrix[index][i])) {
+                node.addConnection(matrix[index][i]);
+            }
         }
     }
 
     private void appendVertical(Node node, int index) {
         for (Node[] nodes : matrix) {
-            node.addConnection(nodes[index]);
+            if(!node.equals(nodes[index])) {
+                node.addConnection(nodes[index]);
+            }
         }
     }
 
@@ -71,7 +93,9 @@ public class Board {
 
         for (int i = r; i < r + SQUARE_SIZE; i++) {
             for (int j = c; j < c + SQUARE_SIZE; j++) {
-                node.addConnection(matrix[i][j]);
+                if(!node.equals(matrix[i][j])) {
+                    node.addConnection(matrix[i][j]);
+                }
             }
         }
     }
