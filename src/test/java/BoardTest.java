@@ -43,30 +43,34 @@ class BoardTest {
     }
 
     @Test
-    void connectedNotesShouldRecogniseStateChange() {
-        board.generateMatrix();
-        board.update(0, 1, 1);
-
-        assertEquals(1, board.matrix[0][1].getData());
-        assertTrue(board.matrix[0][0].isConnectedToValue(1));
-        assertFalse(board.matrix[0][0].isConnectedToValue(2));
-    }
-
-    @Test
-    void updateShouldThrowExceptionForValuesOutsideOfRange() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-            board.update(-1, 0, 0)
-        );
-
-        assertTrue(exception.getMessage()
-            .contains("Unable to use arguments: x=-1 (0-8) y=0 (0-8) value=0 (1-9)"),
-            exception.getMessage());
-    }
-
-    @Test
     void isSolvedShouldReturnFalseWithUnsolvedBoard() {
         board.generateMatrix();
         assertFalse(board.isSolved());
+    }
+
+    @Nested
+    class MakeMove {
+
+        @Test
+        void connectedNodesShouldRecogniseStateChange() {
+            board.generateMatrix();
+            board.update(0, 1, 1);
+
+            assertEquals(1, board.matrix[0][1].getData());
+            assertTrue(board.matrix[0][0].isConnectedToValue(1));
+            assertFalse(board.matrix[0][0].isConnectedToValue(2));
+        }
+
+        @Test
+        void updateShouldThrowExceptionForValuesOutsideOfRange() {
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                board.update(-1, 0, 0)
+            );
+
+            assertTrue(exception.getMessage()
+                    .contains("Unable to use arguments: x=-1 (0-8) y=0 (0-8) value=0 (1-9)"),
+                exception.getMessage());
+        }
     }
 
     @Nested
