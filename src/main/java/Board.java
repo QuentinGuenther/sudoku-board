@@ -20,7 +20,19 @@ public class Board {
     }
 
     public MoveType isValid(int x, int y, int value) {
-        return null;
+        if(x < 0 || x >= LENGTH || y < 0 || y >= LENGTH) {
+            return MoveType.INVALID_OUT_OF_BOUNDS;
+        }
+
+        if(value < 1 || value > LENGTH) {
+            return MoveType.INVALID_VALUE;
+        }
+
+        if(matrix[x][y].isConnectedToValue(value)) {
+            return MoveType.DUPLICATE_VALUE_IN_ADJACENT_NODES;
+        }
+
+        return MoveType.VALID;
     }
 
     public boolean isSolved() {
